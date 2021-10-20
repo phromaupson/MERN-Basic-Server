@@ -4,6 +4,11 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
+const { readdirSync } = require("fs");
+
+//import routes
+//const authRoutes = require("./routes/auth");
+//const personRoutes = require("./routes/person");
 
 //app
 const app = express();
@@ -12,8 +17,8 @@ const app = express();
 mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: true,
+    //useCreateIndex: true,
+    //useFindAndModify: true,
   })
   .then(() => console.log("DB CONNECTED"))
   .catch((err) => console.log("DB CONNECT ERR", err));
@@ -24,9 +29,9 @@ app.use(bodyParser.json({ limit: "2mb" }));
 app.use(cors());
 
 // routes
-app.get("/api", (req, res) => {
-  res.send("hello world");
-});
+//app.use("/api", authRoutes);
+//app.use("/api", personRoutes);
+readdirSync("./routes").map((r) => app.use("/api", require("./routes/" + r)));
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log("Server is running on port", port));
