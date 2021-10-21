@@ -9,8 +9,10 @@ const { createRegister, login } = require("../controllers/auth");
 
 router.post("/register", createRegister);
 
-/* localhost:8000/api/login */
+// @route  POST  localhost:8000/api/login
+// @desc   route login
+// @access Public
 
-router.get("/login", login);
+router.post("/login", login);
 
 module.exports = router;
