@@ -13,7 +13,7 @@ exports.createRegister = async (req, res) => {
     //Check user
     let user = await User.findOne({ name });
     if (user) {
-      return res.status(400).json({ errors: [{ msg: "User already exists" }] });
+      return res.status(400).json({ msg: "User already exists" });
     }
     user = new User({
       name,
@@ -56,9 +56,7 @@ exports.login = async (req, res) => {
     //Check user
     let user = await User.findOne({ name });
     if (!user) {
-      return res
-        .status(400)
-        .json({ errors: [{ msg: "Invalid Credentials no" }] });
+      return res.status(400).json({ msg: "Invalid Credentials no" });
     }
 
     //Compare Encryt password
