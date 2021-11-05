@@ -1,7 +1,6 @@
 const Person = require("../models/Person");
 
 exports.create = async (req, res) => {
-  //res.send("hello create person");
   try {
     const { name } = req.body;
     res.json(await new Person({ name }).save());
@@ -11,7 +10,7 @@ exports.create = async (req, res) => {
   }
 };
 exports.list = async (req, res) => {
-  res.send("hello list person");
+  res.json(await Person.find({}).sort({ createdAt: -1 }).exec());
 };
 exports.read = async (req, res) => {
   res.send("hello read person");
