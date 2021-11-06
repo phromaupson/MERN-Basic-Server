@@ -19,5 +19,11 @@ exports.update = async (req, res) => {
   res.send("hello update person");
 };
 exports.remove = async (req, res) => {
-  res.send("hello remove person");
+  try {
+    const deleted = await Person.findOneAndDelete({ _id: req.params.id });
+    res.json(deleted);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send("Remove Person Failed");
+  }
 };
