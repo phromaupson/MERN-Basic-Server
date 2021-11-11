@@ -17,7 +17,14 @@ exports.read = async(req, res) => {
     res.json(persons);
 };
 exports.update = async(req, res) => {
-    res.send("hello update person");
+    const { name } = req.body;
+    try {
+        const updated = await Person.findOneAndUpdate({ _id: req.params.id }, { name: name }, { new: true });
+        res.json(updated);
+    } catch (err) {
+        console.log(err);
+        res.status(400).send("Update Person Failed");
+    }
 };
 exports.remove = async(req, res) => {
     try {

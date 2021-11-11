@@ -13,6 +13,8 @@ const { readdirSync } = require("fs");
 //app
 const app = express();
 
+app.use(express.static(__dirname + "/public"));
+
 //connect DB
 mongoose
   .connect(process.env.DATABASE, {
