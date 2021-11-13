@@ -1,4 +1,5 @@
 const Person = require("../models/Person");
+const fs = require("fs");
 
 exports.create = async (req, res) => {
   try {
@@ -38,6 +39,13 @@ exports.update = async (req, res) => {
 exports.remove = async (req, res) => {
   try {
     const deleted = await Person.findOneAndDelete({ _id: req.params.id });
+    await fs.unlink(`./public/uploads/${deleted.pic}`, (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("remove success");
+      }
+    });
     res.json(deleted);
   } catch (err) {
     console.log(err);
