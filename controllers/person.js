@@ -23,11 +23,25 @@ exports.read = async (req, res) => {
   res.json(persons);
 };
 exports.update = async (req, res) => {
-  const { name } = req.body;
   try {
+    const { data, fileold } = req.body;
+    var newData = {
+      name: data,
+      pic: fileold,
+    };
+    if (typeof req.file !== "undefined") {
+      newData.pic = req.file.filename;
+      await fs.unlink(`./public/uploads/${req.body.fileold}`, (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("remove success");
+        }
+      });
+    }
     const updated = await Person.findOneAndUpdate(
       { _id: req.params.id },
-      { name: name },
+      newData,
       { new: true }
     );
     res.json(updated);

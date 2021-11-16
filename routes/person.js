@@ -10,7 +10,7 @@ const { upload } = require("../middleware/uploadfile");
 router.get("/person", auth, list);
 router.get("/persons/:id", auth, read);
 router.post("/person", auth, upload, create);
-router.put("/person/:id", auth, update);
+router.put("/person/:id", auth, upload, update);
 router.delete("/person/:id", auth, remove);
 
 module.exports = router;
